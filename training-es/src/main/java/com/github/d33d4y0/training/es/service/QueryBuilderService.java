@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.lucene.search.join.ScoreMode;
+import org.elasticsearch.action.search.ClearScrollRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchScrollRequest;
@@ -314,6 +315,13 @@ public class QueryBuilderService {
 			for (SearchHit hit : searchHits) {
 				entities.add(convertJsonStrToObj(hit.getSourceAsString(), StudentEntity.class));
 			}
+		}
+		ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+		clearScrollRequest.addScrollId(scrollId);
+		try {
+			esClient.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return entities;
 	}
