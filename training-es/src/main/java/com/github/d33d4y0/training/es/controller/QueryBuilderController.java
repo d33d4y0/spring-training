@@ -62,4 +62,9 @@ public class QueryBuilderController {
 	public List<StudentEntity> findByAddressDistrict() {
 		return service.findByAddressDistrict();
 	}
+	
+	@GetMapping("/scrolling")
+	public List<StudentEntity> scrolling() {
+		return service.scrolling();
+	}
 }

@@ -9,10 +9,14 @@ import java.util.List;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.geometry.Point;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -26,6 +30,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.github.d33d4y0.training.es.config.ElasticsearchConfig;
 import com.github.d33d4y0.training.es.entity.StudentEntity;
 
 @Service
@@ -33,6 +38,9 @@ public class QueryBuilderService {
 
 	@Autowired
 	private RestHighLevelClient esClient;
+
+	@Autowired
+	private ElasticsearchConfig esConfig;
 
 	private static final JsonMapper JSON_MAPPER = JsonMapper.builder()
 			.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
@@ -249,6 +257,63 @@ public class QueryBuilderService {
 		SearchHit[] searchHits = searchResponse.getHits().getHits();
 		for (SearchHit hit : searchHits) {
 			entities.add(convertJsonStrToObj(hit.getSourceAsString(), StudentEntity.class));
+		}
+		return entities;
+	}
+
+	public <T> T findByLatitudeAndLongitude(float lat, float lon, Class<T> clazz) throws IOException {
+		Point point = new Point(lon, lat);
+		SearchRequest searchRequest = new SearchRequest("sub-district-boundary-index");
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(1);
+		searchSourceBuilder.query(QueryBuilders.geoIntersectionQuery("geometry", point));
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHit[] searchHits = searchResponse.getHits().getHits();
+		Object info;
+		if (searchHits.length > 0) {
+			info = convertJsonStrToObj(searchHits[0].getSourceAsString(), clazz);
+		} else {
+			info = new Object();
+		}
+		return clazz.cast(info);
+	}
+
+	public List<StudentEntity> scrolling() {
+		List<StudentEntity> entities = new LinkedList<>();
+		Scroll scroll = new Scroll(TimeValue.timeValueMinutes(1L));
+		SearchRequest searchRequest = new SearchRequest("student-index");
+		searchRequest.scroll(scroll);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(esConfig.getScrollSize());
+		searchSourceBuilder.query(QueryBuilders.termQuery("age", 24));
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse;
+		String scrollId;
+		try {
+			searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+			scrollId = searchResponse.getScrollId();
+		} catch (IOException e) {
+			throw new RuntimeException("Cannot peroform searching");
+		}
+		SearchHit[] searchHits = searchResponse.getHits().getHits();
+		for (SearchHit hit : searchHits) {
+			entities.add(convertJsonStrToObj(hit.getSourceAsString(), StudentEntity.class));
+		}
+
+		while (searchHits != null && searchHits.length > 0) {
+			SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+			scrollRequest.scroll(scroll);
+			try {
+				searchResponse = esClient.scroll(scrollRequest, RequestOptions.DEFAULT);
+			} catch (IOException e) {
+				throw new RuntimeException("Cannot peroform searching");
+			}
+			scrollId = searchResponse.getScrollId();
+			searchHits = searchResponse.getHits().getHits();
+			for (SearchHit hit : searchHits) {
+				entities.add(convertJsonStrToObj(hit.getSourceAsString(), StudentEntity.class));
+			}
 		}
 		return entities;
 	}
