@@ -26,26 +26,25 @@ public class AuthManager implements AuthenticationManager {
 
 	@Autowired
 	private AuthConfig authConfig;
-	
+
 	private static Map<String, Apikey> APIKEYS;
 	private static Map<String, Jwt> JWTS;
-	
+
 	@PostConstruct
 	private void init() {
 		APIKEYS = authConfig.getApikeys();
 		JWTS = authConfig.getJwts();
 	}
-	
+
 	@Override
 	public Authentication authenticate(Authentication preAuthentication) throws AuthenticationException {
 		Authentication authentication = null;
-		String[] principals = preAuthentication.getPrincipal() != null
-				? preAuthentication.getPrincipal().toString().split(";")
-				: null;
+		String[] principals = preAuthentication.getPrincipal().toString().isEmpty() ? null
+				: preAuthentication.getPrincipal().toString().split(";");
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		if (principals == null) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_EMPTY"));
-		}else {
+		} else {
 			for (String principal : principals) {
 				if (principal.contains(Apikey.APIKEY_PREFIX)) {
 					principal = principal.substring(Apikey.APIKEY_PREFIX.length(), principal.length());
@@ -53,7 +52,7 @@ public class AuthManager implements AuthenticationManager {
 					if (apikey != null) {
 						authorities.add(new SimpleGrantedAuthority("ROLE_" + Apikey.APIKEY_PREFIX + apikey.getRole()));
 					}
-				}else if (principal.contains(Jwt.JWT_PREFIX)) {
+				} else if (principal.contains(Jwt.JWT_PREFIX)) {
 					principal = principal.substring(Jwt.JWT_PREFIX.length(), principal.length());
 					Claims claims = JwtService.extractAllClaims(principal);
 					String role = (String) claims.get("role");

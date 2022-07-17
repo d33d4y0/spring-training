@@ -37,7 +37,7 @@ public class AuthFilter extends AbstractPreAuthenticatedProcessingFilter {
 		if (list.contains(JWT_HEADER)) {
 			obj += ";" + Jwt.JWT_PREFIX + request.getHeader(JWT_HEADER);
 		}
-		return obj != null ? obj.toString().substring(1) : obj;
+		return obj.toString().isEmpty() ? obj : obj.toString().substring(1);
 	}
 
 //	Cookie version
