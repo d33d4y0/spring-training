@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.entity;
+package com.github.d33d4y0.training.elasticsearch.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -12,8 +12,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.github.d33d4y0.training.es.domain.Address;
-import com.github.d33d4y0.training.es.domain.CourseDomain;
+import com.github.d33d4y0.training.elasticsearch.domain.Address;
+import com.github.d33d4y0.training.elasticsearch.domain.CourseDomain;
 
 @Document(indexName = "student-index")
 public class StudentEntity {

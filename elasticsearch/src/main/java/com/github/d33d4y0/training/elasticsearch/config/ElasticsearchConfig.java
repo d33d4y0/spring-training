@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.config;
+package com.github.d33d4y0.training.elasticsearch.config;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;

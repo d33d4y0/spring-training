@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.service;
+package com.github.d33d4y0.training.elasticsearch.service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,8 +31,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.github.d33d4y0.training.es.config.ElasticsearchConfig;
-import com.github.d33d4y0.training.es.entity.StudentEntity;
+import com.github.d33d4y0.training.elasticsearch.config.ElasticsearchConfig;
+import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
 
 @Service
 public class QueryBuilderService {

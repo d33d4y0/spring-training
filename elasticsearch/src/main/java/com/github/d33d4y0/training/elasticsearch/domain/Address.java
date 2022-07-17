@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.domain;
+package com.github.d33d4y0.training.elasticsearch.domain;
 
 public class Address {
 

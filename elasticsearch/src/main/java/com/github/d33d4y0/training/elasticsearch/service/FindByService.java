@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.service;
+package com.github.d33d4y0.training.elasticsearch.service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -11,10 +11,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.d33d4y0.training.es.domain.Address;
-import com.github.d33d4y0.training.es.domain.CourseDomain;
-import com.github.d33d4y0.training.es.entity.StudentEntity;
-import com.github.d33d4y0.training.es.repository.StudentRepository;
+import com.github.d33d4y0.training.elasticsearch.domain.Address;
+import com.github.d33d4y0.training.elasticsearch.domain.CourseDomain;
+import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
+import com.github.d33d4y0.training.elasticsearch.repository.StudentRepository;
 
 @Service
 public class FindByService {

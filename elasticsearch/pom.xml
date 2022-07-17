@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.d33d4y0</groupId>
-	<artifactId>training-es</artifactId>
+	<groupId>com.github.d33d4y0.training</groupId>
+	<artifactId>elasticsearch</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>training-es</name>
+	<name>elasticsearch</name>
 	<url>https://github.com/d33d4y0</url>
 
 	<properties>

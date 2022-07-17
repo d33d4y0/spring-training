@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.repository;
+package com.github.d33d4y0.training.elasticsearch.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
-import com.github.d33d4y0.training.es.entity.StudentEntity;
+import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
 
 @Repository
 public interface StudentRepository extends ElasticsearchRepository<StudentEntity, String> {

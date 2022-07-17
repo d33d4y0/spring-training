@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es.controller;
+package com.github.d33d4y0.training.elasticsearch.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.d33d4y0.training.es.entity.StudentEntity;
-import com.github.d33d4y0.training.es.service.QueryBuilderService;
+import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
+import com.github.d33d4y0.training.elasticsearch.service.QueryBuilderService;
 
 @RestController
 @RequestMapping(value = "/query-builder")

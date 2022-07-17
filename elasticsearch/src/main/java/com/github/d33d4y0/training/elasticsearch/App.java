@@ -1,4 +1,4 @@
-package com.github.d33d4y0.training.es;
+package com.github.d33d4y0.training.elasticsearch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
