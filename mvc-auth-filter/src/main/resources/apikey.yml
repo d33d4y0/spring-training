@@ -1,0 +1,7 @@
+apikeys:
+  xxx:
+    role: USER
+  yyy:
+    role: ADMIN-1
+  zzz:
+    role: ADMIN-2

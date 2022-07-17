@@ -12,8 +12,8 @@ import com.github.d33d4y0.training.mvc.authfilter.helper.YamlPropertySourceFacto
 
 @Configuration
 @ConfigurationProperties
-@PropertySource(value = "file:${auth.config.path}", factory = YamlPropertySourceFactory.class)
-public class AuthConfig {
+@PropertySource(value = "file:${apikey.config.path}", factory = YamlPropertySourceFactory.class)
+public class ApikeyConfig {
 
 	private Map<String, Apikey> apikeys;
 	private Map<String, Jwt> jwts;

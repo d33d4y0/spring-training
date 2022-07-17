@@ -1,31 +1,29 @@
 package com.github.d33d4y0.training.mvc.authfilter.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.springframework.http.HttpMethod;
 
 public class AuthorizedPath {
 
 	private String path;
-	private HttpMethod method;
-	private List<String> roles;
+	private List<String> methods;
+	private List<String> apikeyUser;
+	private List<String> jwtUser;
 
 	public AuthorizedPath() {
 
 	}
 
-	public AuthorizedPath(String path, HttpMethod method) {
+	public AuthorizedPath(String path, List<String> methods) {
 		this.path = path;
-		this.method = method;
-		this.roles = new ArrayList<>();
+		this.methods = methods;
 	}
-	
-	public AuthorizedPath(String path, HttpMethod method, String... roles) {
+
+	public AuthorizedPath(String path, List<String> methods, List<String> apikeyUser, List<String> jwtUser) {
+		super();
 		this.path = path;
-		this.method = method;
-		this.roles = Arrays.asList(roles);
+		this.methods = methods;
+		this.apikeyUser = apikeyUser;
+		this.jwtUser = jwtUser;
 	}
 
 	public String getPath() {
@@ -36,20 +34,28 @@ public class AuthorizedPath {
 		this.path = path;
 	}
 
-	public HttpMethod getMethod() {
-		return method;
+	public List<String> getMethods() {
+		return methods;
 	}
 
-	public void setMethod(HttpMethod method) {
-		this.method = method;
+	public void setMethods(List<String> methods) {
+		this.methods = methods;
 	}
 
-	public List<String> getRoles() {
-		return roles;
+	public List<String> getApikeyUser() {
+		return apikeyUser;
 	}
 
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
+	public void setApikeyUser(List<String> apikeyUser) {
+		this.apikeyUser = apikeyUser;
+	}
+
+	public List<String> getJwtUser() {
+		return jwtUser;
+	}
+
+	public void setJwtUser(List<String> jwtUser) {
+		this.jwtUser = jwtUser;
 	}
 
 }

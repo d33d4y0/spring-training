@@ -14,7 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.github.d33d4y0.training.mvc.authfilter.config.AuthConfig;
+import com.github.d33d4y0.training.mvc.authfilter.config.ApikeyConfig;
 import com.github.d33d4y0.training.mvc.authfilter.domain.Apikey;
 import com.github.d33d4y0.training.mvc.authfilter.domain.Jwt;
 import com.github.d33d4y0.training.mvc.authfilter.service.JwtService;
@@ -25,15 +25,13 @@ import io.jsonwebtoken.Claims;
 public class AuthManager implements AuthenticationManager {
 
 	@Autowired
-	private AuthConfig authConfig;
+	private ApikeyConfig apikeyConfig;
 
 	private static Map<String, Apikey> APIKEYS;
-	private static Map<String, Jwt> JWTS;
 
 	@PostConstruct
 	private void init() {
-		APIKEYS = authConfig.getApikeys();
-		JWTS = authConfig.getJwts();
+		APIKEYS = apikeyConfig.getApikeys();
 	}
 
 	@Override
@@ -56,8 +54,7 @@ public class AuthManager implements AuthenticationManager {
 					principal = principal.substring(Jwt.JWT_PREFIX.length(), principal.length());
 					Claims claims = JwtService.extractAllClaims(principal);
 					String role = (String) claims.get("role");
-					Jwt jwt = JWTS.get(role);
-					if (jwt != null) {
+					if (role != null) {
 						authorities.add(new SimpleGrantedAuthority("ROLE_" + Jwt.JWT_PREFIX + role));
 					}
 				}

@@ -1,0 +1,27 @@
+authorized:
+  - path: /secure/apikey/admin/1/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    apikeyUser: ["ADMIN-1"]
+  - path: /secure/apikey/admin/2/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    apikeyUser: ["ADMIN-2"]
+  - path: /secure/jwt/admin/1/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    jwtUser: ["ADMIN-1"]
+  - path: /secure/jwt/admin/2/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    jwtUser: ["ADMIN-2"]
+  - path: /secure/jwt/admin/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    apikeyUser: ["ADMIN-1", "ADMIN-2"]
+    jwtUser: ["ADMIN-1", "ADMIN-2"]
+  - path: /secure/admin/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    apikeyUser: ["ADMIN-1", "ADMIN-2"]
+    jwtUser: ["ADMIN-1", "ADMIN-2"]
+  - path: /secure/apikey/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    apikeyUser: ["USER", "ADMIN-1", "ADMIN-2"]
+  - path: /secure/jwt/**
+    methods: ["GET", "POST", "DELETE", "PUT"]
+    jwtUser: ["USER", "ADMIN-1", "ADMIN-2"]
