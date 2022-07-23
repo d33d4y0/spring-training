@@ -2,38 +2,28 @@ package com.github.d33d4y0.training.mongodb.dto;
 
 import com.github.d33d4y0.training.mongodb.entity.CustomerEntity;
 
-public class CustomerDTO {
+public class CustomerSearchDTO {
 
-	private String firstName;
-	private String lastName;
+	private String name;
 	private Integer age;
 	private String citizenID;
 
-	public CustomerDTO() {
+	public CustomerSearchDTO() {
 
 	}
 
-	public CustomerDTO(CustomerEntity entity) {
-		this.firstName = entity.getFirstName();
-		this.lastName = entity.getLastName();
+	public CustomerSearchDTO(CustomerEntity entity) {
+		this.name = entity.getName();
 		this.age = entity.getAge();
 		this.citizenID = entity.getCitizenId();
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getAge() {

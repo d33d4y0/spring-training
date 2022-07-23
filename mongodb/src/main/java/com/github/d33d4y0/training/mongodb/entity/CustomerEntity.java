@@ -1,6 +1,6 @@
 package com.github.d33d4y0.training.mongodb.entity;
 
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -8,47 +8,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
-import com.github.d33d4y0.training.mongodb.dto.CustomerDTO;
+import com.github.d33d4y0.training.mongodb.domain.AddressDomain;
 
 @Document(collection = "customer-index")
 public class CustomerEntity {
 
 	@Id
 	private String id;
-	@NotNull
 	@Field(targetType = FieldType.STRING)
-	private String firstName;
-	@NotNull
-	@Field(targetType = FieldType.STRING)
-	private String lastName;
-	@NotNull
+	private String name;
 	@Field(targetType = FieldType.INT32)
 	private Integer age;
-	@NotNull
 	@Field(targetType = FieldType.STRING)
 //	for unique field
 	@Indexed(unique = true)
 	private String citizenId;
+	@Field(targetType = FieldType.DATE_TIME)
+	private LocalDateTime registeredDateTime;
+	private AddressDomain address;
+	private boolean active;
 
 	public CustomerEntity() {
 
-	}
-
-	public CustomerEntity(@NotNull String firstName, @NotNull String lastName, @NotNull Integer age,
-			@NotNull String citizenId) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.citizenId = citizenId;
-	}
-	
-	public CustomerEntity(CustomerDTO customer) {
-		super();
-		this.firstName = customer.getFirstName();
-		this.lastName = customer.getLastName();
-		this.age = customer.getAge();
-		this.citizenId = customer.getCitizenID();
 	}
 
 	public String getId() {
@@ -57,22 +38,6 @@ public class CustomerEntity {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public Integer getAge() {
@@ -89,6 +54,38 @@ public class CustomerEntity {
 
 	public void setCitizenId(String citizenId) {
 		this.citizenId = citizenId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public LocalDateTime getRegisteredDateTime() {
+		return registeredDateTime;
+	}
+
+	public void setRegisteredDateTime(LocalDateTime registeredDateTime) {
+		this.registeredDateTime = registeredDateTime;
+	}
+
+	public AddressDomain getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressDomain address) {
+		this.address = address;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }
