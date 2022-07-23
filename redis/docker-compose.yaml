@@ -1,0 +1,8 @@
+version: "3.5"
+services:
+  redis:
+    image: redis:7.0.4
+    volumes:
+      - ${DOCKER_VOLUME}/redis/data:/data
+    ports:
+      - 6379:6379
