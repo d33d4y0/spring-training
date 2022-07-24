@@ -1,5 +1,7 @@
 package com.github.d33d4y0.training.redis.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,8 @@ public class CustomerController {
 	private CustomerService service;
 
 	@PostMapping("/find")
-	public CustomerDomain findCustomer(@RequestBody CustomerSearchDTO search) {
-		return service.findCustomer(search);
+	public List<CustomerDomain> findCustomers(@RequestBody CustomerSearchDTO search) {
+		return service.findCustomers(search);
 	}
 
 	@PostMapping("/add")
