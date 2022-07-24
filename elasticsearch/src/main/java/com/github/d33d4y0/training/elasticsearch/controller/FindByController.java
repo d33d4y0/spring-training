@@ -22,6 +22,11 @@ public class FindByController {
 		return service.findByCitizenId();
 	}
 	
+	@GetMapping("/or")
+	public List<StudentEntity> findByNameOrCitizenId() {
+		return service.findByNameOrCitizenId();
+	}
+	
 	@GetMapping("/is-not")
 	public List<StudentEntity> findByCitizenIdIsNot() {
 		return service.findByCitizenIdIsNot();

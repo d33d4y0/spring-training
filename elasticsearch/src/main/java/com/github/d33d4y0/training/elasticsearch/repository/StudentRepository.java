@@ -37,6 +37,7 @@ public interface StudentRepository extends ElasticsearchRepository<StudentEntity
 	
 //	OR
 	public List<StudentEntity> findByNameOrAge(String name, int age);
+	public List<StudentEntity> findByNameOrCitizenId(String name, String citizenId);
 	
 //	Sorting
 	public List<StudentEntity> findByAgeOrderByRegisteredDateTimeDesc(int age);

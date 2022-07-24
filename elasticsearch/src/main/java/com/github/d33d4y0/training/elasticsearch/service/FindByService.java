@@ -62,6 +62,10 @@ public class FindByService {
 		StudentEntity entity = studentRepo.findByCitizenId("1111111111111");
 		return entity;
 	}
+	
+	public List<StudentEntity> findByNameOrCitizenId() {
+		return studentRepo.findByNameOrCitizenId("John Doe", "1111111111111");
+	}
 
 	public List<StudentEntity> findByAge() {
 		List<StudentEntity> entities = studentRepo.findByAge(24);
