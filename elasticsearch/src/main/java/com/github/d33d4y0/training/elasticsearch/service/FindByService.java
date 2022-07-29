@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.github.d33d4y0.training.elasticsearch.domain.Address;
@@ -110,6 +111,14 @@ public class FindByService{
 	public List<StudentEntity> findByAddressDistrict() {
 		List<StudentEntity> entities = studentRepo.findByAddressDistrict("Pak Khlong Phasi Charoen");
 		return entities;
+	}
+	
+	public List<StudentEntity> findAllPageable(Integer page, Integer size){
+		return studentRepo.findAll(PageRequest.of(page, size)).toList();
+	}
+	
+	public List<StudentEntity> findByAddressProvince(String province, Integer page, Integer size){
+		return studentRepo.findByAddressProvince(province, PageRequest.of(page, size)).toList();
 	}
 
 }

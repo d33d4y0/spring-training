@@ -3,6 +3,8 @@ package com.github.d33d4y0.training.elasticsearch.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
@@ -39,4 +41,7 @@ public interface StudentRepository extends ElasticsearchRepository<StudentEntity
 	
 //	Sorting
 	public List<StudentEntity> findByAgeOrderByRegisteredDateTimeDesc(int age);
+	
+//	Page
+	public Page<StudentEntity> findByAddressProvince(String province, Pageable pageable);
 }
