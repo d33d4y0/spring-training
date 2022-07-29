@@ -17,8 +17,8 @@ import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
 import com.github.d33d4y0.training.elasticsearch.repository.StudentRepository;
 
 @Service
-public class FindByService {
-
+public class FindByService{
+	
 	@Autowired
 	private StudentRepository studentRepo;
 
@@ -78,7 +78,7 @@ public class FindByService {
 	}
 
 	public List<StudentEntity> findByIsGraduatedFalse() {
-		List<StudentEntity> entities = studentRepo.findByIsGraduatedFalse();
+		List<StudentEntity> entities = studentRepo.findByGraduatedFalse();
 		return entities;
 	}
 
@@ -111,4 +111,5 @@ public class FindByService {
 		List<StudentEntity> entities = studentRepo.findByAddressDistrict("Pak Khlong Phasi Charoen");
 		return entities;
 	}
+
 }

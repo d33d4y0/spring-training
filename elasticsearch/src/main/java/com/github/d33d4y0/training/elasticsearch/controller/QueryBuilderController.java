@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,5 +68,15 @@ public class QueryBuilderController {
 	@GetMapping("/scrolling")
 	public List<StudentEntity> scrolling() {
 		return service.scrolling();
+	}
+	
+	@PatchMapping("/v1/graduated")
+	public void updateGraduated(@RequestBody boolean graduated) throws IOException {
+		service.update(graduated);
+	}
+	
+	@PatchMapping("/v2/graduated")
+	public void update2Graduated(@RequestBody boolean graduated) throws IOException {
+		service.update2(graduated);
 	}
 }

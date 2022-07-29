@@ -3,6 +3,7 @@ package com.github.d33d4y0.training.elasticsearch.service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +18,9 @@ import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.geometry.Point;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.reindex.UpdateByQueryRequest;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -33,13 +37,15 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.github.d33d4y0.training.elasticsearch.config.ElasticsearchConfig;
 import com.github.d33d4y0.training.elasticsearch.entity.StudentEntity;
+import com.github.d33d4y0.training.elasticsearch.repository.StudentRepository;
 
 @Service
 public class QueryBuilderService {
 
 	@Autowired
 	private RestHighLevelClient esClient;
-
+	@Autowired
+	private StudentRepository studentRepo;
 	@Autowired
 	private ElasticsearchConfig esConfig;
 
@@ -278,6 +284,26 @@ public class QueryBuilderService {
 			info = new Object();
 		}
 		return clazz.cast(info);
+	}
+
+	public void update2(boolean graduated) {
+		studentRepo.updateGraduated("1111111111111", graduated);
+	}
+
+	public void update(boolean graduated) throws IOException {
+		UpdateByQueryRequest updateRequestQuery = new UpdateByQueryRequest("student-index");
+		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+		boolQuery.must(QueryBuilders.termQuery("citizenId.keyword", "1111111111111"));
+		updateRequestQuery.setQuery(boolQuery);
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append("ctx._source.graduated = \'");
+		strBuilder.append(String.valueOf(graduated));
+		strBuilder.append("\'");
+		Script script = new Script(ScriptType.INLINE, "painless", strBuilder.toString(), Collections.emptyMap());
+		updateRequestQuery.setScript(script);
+		updateRequestQuery.setTimeout(TimeValue.timeValueMinutes(10));
+		updateRequestQuery.setSlices(0);
+		esClient.updateByQuery(updateRequestQuery, RequestOptions.DEFAULT);
 	}
 
 	public List<StudentEntity> scrolling() {

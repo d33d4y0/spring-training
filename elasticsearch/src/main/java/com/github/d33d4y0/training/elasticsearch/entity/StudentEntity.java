@@ -30,7 +30,7 @@ public class StudentEntity {
 	@JsonFormat(pattern = "uuuu-MM-dd'T'HH:mm:ss.SSS")
 	private LocalDateTime registeredDateTime;
 	private List<String> tags;
-	private boolean isGraduated;
+	private boolean graduated;
 	@Field(type = FieldType.Nested)
 	private Address address;
 
@@ -91,11 +91,11 @@ public class StudentEntity {
 	}
 
 	public boolean isGraduated() {
-		return isGraduated;
+		return graduated;
 	}
 
-	public void setGraduated(boolean isGraduated) {
-		this.isGraduated = isGraduated;
+	public void setGraduated(boolean graduated) {
+		this.graduated = graduated;
 	}
 
 	public Address getAddress() {
