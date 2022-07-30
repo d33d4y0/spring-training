@@ -55,12 +55,6 @@ public class CustomerController {
 		return service.findById(id);
 	}
 
-	@GetMapping("/combined")
-	public CustomerDto findFirstByFirstNameAndLastName(@RequestParam(value = "f") String firstName,
-			@RequestParam(value = "l") String lastName) {
-		return service.findFirstByFirstNameAndLastName(firstName, lastName);
-	}
-	
 	@GetMapping("/card")
 	public CreditCardEntity findByCardNumber(@RequestParam(value = "card") String card) {
 		return service.findByCardNumber(card);

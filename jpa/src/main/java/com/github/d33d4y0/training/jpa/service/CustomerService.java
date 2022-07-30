@@ -29,7 +29,5 @@ public interface CustomerService {
 
 	public List<CustomerDto> findByProvince(String province);
 
-	public CustomerDto findFirstByFirstNameAndLastName(String firstName, String lastName);
-
 	public CreditCardEntity findByCardNumber(String card);
 }

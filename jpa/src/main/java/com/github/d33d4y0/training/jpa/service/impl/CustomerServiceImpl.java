@@ -184,11 +184,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDto findFirstByFirstNameAndLastName(String firstName, String lastName) {
-		return new CustomerDto(customerRepo.findFirstByFirstNameAndLastName(firstName, lastName));
-	}
-
-	@Override
 	public CreditCardEntity findByCardNumber(String card) {
 		return cardRepo.findByCardNumber(card);
 	}

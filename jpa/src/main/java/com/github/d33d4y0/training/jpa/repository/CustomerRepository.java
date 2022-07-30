@@ -28,8 +28,4 @@ public interface CustomerRepository extends PagingAndSortingRepository<CustomerE
 
 	@Query("select c from CustomerEntity c where c.firstName like %?1")
 	List<CustomerEntity> findByFirstNameEndWith(String firstName);
-
-	@Query("select c from CustomerEntity c JOIN c.creditCard card "
-			+ "where c.firstName = ?1 and c.lastName = ?2")
-	CustomerEntity findFirstByFirstNameAndLastName(String firstName, String lastName);
 }
