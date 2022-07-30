@@ -19,7 +19,8 @@ public interface CustomerRepository extends PagingAndSortingRepository<CustomerE
 
 	List<CustomerEntity> findByLastNameOrAddress_PostalCode(String lastName, String Address_PostalCode);
 
-	Slice<CustomerEntity> findPagableByLastNameOrAddress_PostalCode(String lastName, String Address_PostalCode, Pageable pageable);
+	Slice<CustomerEntity> findPagableByLastNameOrAddress_PostalCode(String lastName, String Address_PostalCode,
+			Pageable pageable);
 
 	CustomerEntity findFirstByLastName(String lastName);
 
@@ -27,4 +28,8 @@ public interface CustomerRepository extends PagingAndSortingRepository<CustomerE
 
 	@Query("select c from CustomerEntity c where c.firstName like %?1")
 	List<CustomerEntity> findByFirstNameEndWith(String firstName);
+
+	@Query("select c from CustomerEntity c JOIN c.creditCard card "
+			+ "where c.firstName = ?1 and c.lastName = ?2")
+	CustomerEntity findFirstByFirstNameAndLastName(String firstName, String lastName);
 }

@@ -3,6 +3,8 @@ package com.github.d33d4y0.training.jpa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.d33d4y0.training.jpa.dto.CustomerDto;
+import com.github.d33d4y0.training.jpa.entity.CreditCardEntity;
 import com.github.d33d4y0.training.jpa.service.CustomerService;
 
 @RestController
@@ -52,8 +55,19 @@ public class CustomerController {
 		return service.findById(id);
 	}
 
+	@GetMapping("/combined")
+	public CustomerDto findFirstByFirstNameAndLastName(@RequestParam(value = "f") String firstName,
+			@RequestParam(value = "l") String lastName) {
+		return service.findFirstByFirstNameAndLastName(firstName, lastName);
+	}
+	
+	@GetMapping("/card")
+	public CreditCardEntity findByCardNumber(@RequestParam(value = "card") String card) {
+		return service.findByCardNumber(card);
+	}
+
 	@PostMapping()
-	public CustomerDto addCustomer(@RequestBody CustomerDto customer) {
-		return service.addCustomer(customer);
+	public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customer) {
+		return new ResponseEntity<>(service.addCustomer(customer), HttpStatus.CREATED);
 	}
 }

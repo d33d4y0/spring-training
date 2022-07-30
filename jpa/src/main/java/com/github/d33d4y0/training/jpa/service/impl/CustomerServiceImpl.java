@@ -1,8 +1,10 @@
 package com.github.d33d4y0.training.jpa.service.impl;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -14,8 +16,13 @@ import org.springframework.stereotype.Service;
 
 import com.github.d33d4y0.training.jpa.dto.CustomerDto;
 import com.github.d33d4y0.training.jpa.entity.Address;
+import com.github.d33d4y0.training.jpa.entity.CreditCardEntity;
 import com.github.d33d4y0.training.jpa.entity.CustomerEntity;
+import com.github.d33d4y0.training.jpa.entity.PhoneEntity;
+import com.github.d33d4y0.training.jpa.entity.PromotionCodeEntity;
+import com.github.d33d4y0.training.jpa.repository.CreditCardRepository;
 import com.github.d33d4y0.training.jpa.repository.CustomerRepository;
+import com.github.d33d4y0.training.jpa.repository.PromotionCodeRepository;
 import com.github.d33d4y0.training.jpa.service.CustomerService;
 
 @Service
@@ -23,24 +30,55 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepo;
+	@Autowired
+	private CreditCardRepository cardRepo;
+	@Autowired
+	private PromotionCodeRepository promoRepo;
 
 	@PostConstruct
 	private void initCustomer() {
+		customerRepo.deleteAll();
+		cardRepo.deleteAll();
+		promoRepo.deleteAll();
+		
+		PromotionCodeEntity code1 = new PromotionCodeEntity("FIFTY", 50d);
+		PromotionCodeEntity code2 = new PromotionCodeEntity("NEW_CUST", 100d);
+		PromotionCodeEntity code3 = new PromotionCodeEntity("VIP", 200d);
+		Iterable<PromotionCodeEntity> promos = promoRepo.saveAll(Arrays.asList(code1, code2, code3));
+		Map<String, PromotionCodeEntity> promoMap = new HashMap<>();
+		for (PromotionCodeEntity promo : promos) {
+			promoMap.put(promo.getCode(), promo);
+		}
 		CustomerEntity customer1 = new CustomerEntity();
 		customer1.setFirstName("D33d4y");
 		customer1.setLastName("Jpa");
 		customer1.setAddress(new Address("Thailand", "Bangkok", "Rama9", "10280"));
+		customer1.setCreditCard(new CreditCardEntity(customer1.getFirstName() + " " + customer1.getLastName(),
+				"4242424242424242", "123"));
+		customer1.setPhones(Arrays.asList(new PhoneEntity("+66982536544"), new PhoneEntity("+66985231499")));
+		customer1.setPromoCodes(
+				Arrays.asList(promoMap.get("FIFTY"), promoMap.get("NEW_CUST")));
 
 		CustomerEntity customer2 = new CustomerEntity();
 		customer2.setFirstName("Srping");
 		customer2.setLastName("Jpa");
 		customer2.setAddress(new Address("Thailand", "Bangkok", "Thapra", "10160"));
-
+		customer2.setCreditCard(new CreditCardEntity(customer2.getFirstName() + " " + customer2.getLastName(),
+				"1234567891234567", "456"));
+		customer2.setPhones(Arrays.asList(new PhoneEntity("+66684523215")));
+		customer2.setPromoCodes(
+				Arrays.asList(promoMap.get("NEW_CUST")));
+		
 		CustomerEntity customer3 = new CustomerEntity();
 		customer3.setFirstName("Day");
 		customer3.setLastName("Test");
 		customer3.setAddress(new Address("Thailand", "Bangkok", "Thapra", "10160"));
-
+		customer3.setCreditCard(new CreditCardEntity(customer3.getFirstName() + " " + customer3.getLastName(),
+				"1111111111111111", "789"));
+		customer3.setPhones(Arrays.asList(new PhoneEntity("+66895985355")));
+		customer3.setPromoCodes(
+				Arrays.asList(promoMap.get("VIP")));
+		
 		customerRepo.saveAll(Arrays.asList(customer1, customer2, customer3));
 	}
 
@@ -144,4 +182,15 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return dtos;
 	}
+
+	@Override
+	public CustomerDto findFirstByFirstNameAndLastName(String firstName, String lastName) {
+		return new CustomerDto(customerRepo.findFirstByFirstNameAndLastName(firstName, lastName));
+	}
+
+	@Override
+	public CreditCardEntity findByCardNumber(String card) {
+		return cardRepo.findByCardNumber(card);
+	}
+
 }

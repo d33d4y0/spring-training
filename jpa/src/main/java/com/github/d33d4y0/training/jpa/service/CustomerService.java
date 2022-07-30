@@ -3,6 +3,7 @@ package com.github.d33d4y0.training.jpa.service;
 import java.util.List;
 
 import com.github.d33d4y0.training.jpa.dto.CustomerDto;
+import com.github.d33d4y0.training.jpa.entity.CreditCardEntity;
 
 public interface CustomerService {
 
@@ -21,10 +22,14 @@ public interface CustomerService {
 	public CustomerDto addCustomer(CustomerDto customer);
 
 	public List<CustomerDto> findAll(Integer page, Integer size, String sortBy);
-	
+
 	public CustomerDto findFirstByLastName(String lastName);
-	
+
 	public List<CustomerDto> findByFirstNameEndWith(String firstName);
-	
+
 	public List<CustomerDto> findByProvince(String province);
+
+	public CustomerDto findFirstByFirstNameAndLastName(String firstName, String lastName);
+
+	public CreditCardEntity findByCardNumber(String card);
 }
