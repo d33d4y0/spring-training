@@ -2,17 +2,17 @@ package com.github.d33d4y0.training.mongodb.dto;
 
 import com.github.d33d4y0.training.mongodb.entity.CustomerEntity;
 
-public class CustomerSearchDTO {
+public class CustomerSearchDto {
 
 	private String name;
 	private Integer age;
 	private String citizenID;
 
-	public CustomerSearchDTO() {
+	public CustomerSearchDto() {
 
 	}
 
-	public CustomerSearchDTO(CustomerEntity entity) {
+	public CustomerSearchDto(CustomerEntity entity) {
 		this.name = entity.getName();
 		this.age = entity.getAge();
 		this.citizenID = entity.getCitizenId();
