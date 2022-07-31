@@ -36,9 +36,8 @@ public class CustomerEntity {
 	@JoinColumn(name = "creditCard_id", referencedColumnName = "id")
 	@JsonIgnore
 	private CreditCardEntity creditCard;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id")
 	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
 	private List<PhoneEntity> phones;
 	@ManyToMany
 	@JoinTable(joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "promotion_id"))
